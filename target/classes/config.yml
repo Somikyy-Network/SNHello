@@ -1,0 +1,41 @@
+# ----------------------------------------
+#     SN HELLO / V1.0 / by Somikyy
+#           twitch.tv/som1kyy
+# ----------------------------------------
+
+# hello section ( use '' to display ' in words like he's, she's, etc. )
+
+welcome-message: '&6Welcome to the server, %player%!' # '&' is the color code, '%player%' is a placeholder for the player's name
+
+first-join-title: '&6Welcome to the server' # '&' is the color code, '%player%' is a placeholder for the player's name
+first-join-subtitle: '&6This is your first time in here!' # '&' is the color code, '%player%' is a placeholder for the player's name
+
+returning-join-title: '&6Welcome back to the server' # '&' is the color code, '%player%' is a placeholder for the player's name
+returning-join-subtitle: '&6You have been here before!' # '&' is the color code, '%player%' is a placeholder for the player's name
+
+# goodbye section ( use "" to display nothing )
+
+goodbye-message: '&6Goodbye, %player%!' # '&' is the color code, '%player%' is a placeholder for the player's name
+
+# effect/sound section ( use none to display nothing )
+
+# http://www.theredengineer.com/1.9-playsound-list.html you can find sounds here (this is only for 1.20+ minecraft version)
+
+join-sound: ENTITY_PLAYER_LEVELUP # sound played when a player joins the server (only existing sounds can be played)
+# if you want to use a custom sound = create a resource pack i guess?)
+
+quit-sound: ENTITY_PLAYER_LEVELUP # sound played when a player quits the server (only existing sounds can be played)
+# if you want to use a custom sound = create a resource pack i guess?)
+
+
+# https://minecraft.fandom.com/wiki/Particles you can find particles here (this is only for 1.20.4 minecraft version)
+
+join-particle: EXPLOSION_LARGE # crop_growth_emitter # effect played when a player joins the server (only existing effects can be played)
+# if you want to use a custom effect = create a resource pack i guess?)
+
+quit-particle: VILLAGER_ANGRY # effect played when a player quits the server (only existing effects can be played)
+# if you want to use a custom effect = create a resource pack i guess?)
+
+dust-color: none #use RGB colors like this: 255,255,255. If you want to search for a color = https://www.rapidtables.com/web/color/RGB_Color.html
+
+joined-players: []
