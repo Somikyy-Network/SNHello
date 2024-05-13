@@ -1,0 +1,16 @@
+name: SNHello
+version: '1.0'
+main: org.snhello.SNHello
+api-version: '1.20'
+prefix: SNHello
+authors: [somikyy]
+description: Plugin that does say hello and goodbye for every player that joins or leaves the server
+
+commands:
+  SNHello:
+    description: Reloads the plugin configuration
+    permission: snhello.reload
+    aliases: [reload]
+  rsnhp:
+    description: Reloads the plugin configuration
+    permission: snhello.reload

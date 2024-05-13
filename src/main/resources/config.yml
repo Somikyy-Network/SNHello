@@ -36,6 +36,7 @@ join-particle: EXPLOSION_LARGE # crop_growth_emitter # effect played when a play
 quit-particle: VILLAGER_ANGRY # effect played when a player quits the server (only existing effects can be played)
 # if you want to use a custom effect = create a resource pack i guess?)
 
-dust-color: none #use RGB colors like this: 255,255,255. If you want to search for a color = https://www.rapidtables.com/web/color/RGB_Color.html
+dust-color-join: none #use RGB colors like this: 255,255,255. If you want to search for a color = https://www.rapidtables.com/web/color/RGB_Color.html
+dust-color-quit: none #use RGB colors like this: 255,255,255. If you want to search for a color = https://www.rapidtables.com/web/color/RGB_Color.html
 
 joined-players: [] # list of players that have joined the server

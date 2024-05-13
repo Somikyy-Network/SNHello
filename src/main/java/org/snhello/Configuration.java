@@ -15,7 +15,7 @@ public class Configuration {
 
     public Configuration(SNHello plugin) {
         this.plugin = plugin;
-        this.configFile = new File(plugin.getDataFolder(), "cacac/config.yml");
+        this.configFile = new File(plugin.getDataFolder(), "config.yml");
         loadConfig();
     }
 
@@ -39,7 +39,7 @@ public class Configuration {
 
 private boolean isConfigCorruptedOrOutdated() {
     // List of keys that are expected in the configuration file
-    List<String> expectedKeys = Arrays.asList("welcome-message", "joined-players", "first-join-title", "first-join-subtitle", "returning-join-title", "returning-join-subtitle", "goodbye-message", "join-sound", "quit-sound", "join-particle", "quit-particle");
+    List<String> expectedKeys = Arrays.asList("welcome-message", "joined-players", "first-join-title", "first-join-subtitle", "returning-join-title", "returning-join-subtitle", "goodbye-message", "join-sound", "quit-sound", "join-particle", "quit-particle", "dust-color-join", "dust-color-quit");
 
     // Check if all expected keys are present in the configuration
     for (String key : expectedKeys) {
@@ -131,16 +131,27 @@ public Map<UUID, Boolean> getJoinedPlayers() {
         return "none".equals(particle) ? null : particle;
     }
 
-public Color getDustColor() {
-    String rgb = config.getString("dust-color", "255,255,255");
-    String[] rgbValues = rgb.split(",");
+    public int[] getJoinDustColor() {
+        String rgb = config.getString("dust-color-join", "255,255,255");
+        String[] rgbValues = rgb.split(",");
 
-    int red = Integer.parseInt(rgbValues[0]);
-    int green = Integer.parseInt(rgbValues[1]);
-    int blue = Integer.parseInt(rgbValues[2]);
+        int red = Integer.parseInt(rgbValues[0]);
+        int green = Integer.parseInt(rgbValues[1]);
+        int blue = Integer.parseInt(rgbValues[2]);
 
-    return Color.fromRGB(red, green, blue);
-}
+        return new int[]{red, green, blue};
+    }
+
+    public int[] getQuitDustColor() {
+        String rgb = config.getString("dust-color-quit", "255,255,255");
+        String[] rgbValues = rgb.split(",");
+
+        int red = Integer.parseInt(rgbValues[0]);
+        int green = Integer.parseInt(rgbValues[1]);
+        int blue = Integer.parseInt(rgbValues[2]);
+
+        return new int[]{red, green, blue};
+    }
 
     public String getQuitParticle() {
         String particle = config.getString("quit-particle", "VILLAGER_ANGRY");

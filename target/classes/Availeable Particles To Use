@@ -43,3 +43,4 @@ DRAGON_BREATH
 END_ROD
 DAMAGE_INDICATOR
 SWEEP_ATTACK
+# Particles that are not in the list above are not supported by the plugin.

@@ -1,16 +1,21 @@
 package org.snhello;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-//&&
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.concurrent.atomic.AtomicReference;
+
 public class QuitListener implements Listener {
     private SNHello plugin;
     private Configuration config;
+    private Particle quitParticle;
 
     public QuitListener(SNHello plugin) {
         this.plugin = plugin;
@@ -31,12 +36,33 @@ public class QuitListener implements Listener {
         }
 
         String particleName = plugin.getConfiguration().getQuitParticle();
-        if (particleName != null) {
-            Particle quitParticle = Particle.valueOf(particleName);
-            player.spawnParticle(quitParticle, player.getLocation(), 100);
+        Particle quitParticle = particleName != null ? Particle.valueOf(particleName) : null;
+
+        AtomicReference<Particle.DustOptions> dustOptionsRef = new AtomicReference<>();
+        if (quitParticle == Particle.REDSTONE && !plugin.getConfiguration().getQuitDustColor().equals("none")) {
+            int[] color = plugin.getConfiguration().getQuitDustColor();
+            Color dustColor = Color.fromRGB(color[0], color[1], color[2]);
+            dustOptionsRef.set(new Particle.DustOptions(dustColor, 1));
+        } else {
+            Color defaultColor = Color.fromRGB(255, 255, 255); // Default white color
+            dustOptionsRef.set(new Particle.DustOptions(defaultColor, 1));
         }
-        int onlinePlayers = plugin.getServer().getOnlinePlayers().size() - 1;
-        // say in console that the player left the server and say how much players are online color of this message needs to be red
-        plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + player.getName() + " left the server. There are " + onlinePlayers + " players online.");
+
+        new BukkitRunnable() {
+            int particleSeconds = 0;
+
+            @Override
+            public void run() {
+                if (quitParticle == Particle.REDSTONE) {
+                    player.getWorld().spawnParticle(quitParticle, player.getLocation(), 100, dustOptionsRef.get());
+                } else {
+                    player.getWorld().spawnParticle(quitParticle, player.getLocation(), 100, 0.5, 0.5, 0.5, 1);
+                }
+                particleSeconds++;
+                if (particleSeconds >= 30) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 }

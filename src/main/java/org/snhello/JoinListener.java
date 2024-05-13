@@ -1,6 +1,7 @@
 package org.snhello;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -8,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.Particle.DustOptions;
+import java.util.concurrent.atomic.AtomicReference;
 
 import java.util.Map;
 import java.util.UUID;
@@ -35,27 +36,34 @@ public void onPlayerJoin(PlayerJoinEvent event) {
     }
 
     String particleName = plugin.getConfiguration().getJoinParticle();
-    if (particleName != null && !particleName.equals("none")) {
-        Particle joinParticle = Particle.valueOf(particleName);
+    Particle joinParticle = particleName != null ? Particle.valueOf(particleName) : null;
 
-        if (joinParticle == Particle.REDSTONE && !plugin.getConfiguration().getDustColor().equals("none")) {
-            DustOptions dustOptions = new DustOptions(plugin.getConfiguration().getDustColor(), 1);
-            player.getWorld().spawnParticle(joinParticle, player.getLocation(), 100, 0.5, 0.5, 0.5, 1, dustOptions);
-        }
+    AtomicReference<Particle.DustOptions> dustOptionsRef = new AtomicReference<>();
+    if (joinParticle == Particle.REDSTONE && !plugin.getConfiguration().getJoinDustColor().equals("none")) {
+        int[] color = plugin.getConfiguration().getJoinDustColor();
+        Color dustColor = Color.fromRGB(color[0], color[1], color[2]);
+        dustOptionsRef.set(new Particle.DustOptions(dustColor, 1));
+    } else {
+        Color defaultColor = Color.fromRGB(255, 255, 255); // Default white color
+        dustOptionsRef.set(new Particle.DustOptions(defaultColor, 1));
+    }
 
-        new BukkitRunnable() {
-            int particleSeconds = 0;
+    new BukkitRunnable() {
+        int particleSeconds = 0;
 
         @Override
-            public void run() {
-            player.getWorld().spawnParticle(joinParticle, player.getLocation(), 100);
+        public void run() {
+            if (joinParticle == Particle.REDSTONE) {
+                player.getWorld().spawnParticle(joinParticle, player.getLocation(), 100, dustOptionsRef.get());
+            } else {
+                player.getWorld().spawnParticle(joinParticle, player.getLocation(), 100, 0.5, 0.5, 0.5, 1);
+            }
             particleSeconds++;
             if (particleSeconds >= 30) {
                 this.cancel();
             }
         }
     }.runTaskTimer(plugin, 0L, 1L);
-}
     // Check if the player has joined before
     UUID playerId = player.getUniqueId();
     Map<UUID, Boolean> joinedPlayers = plugin.getConfiguration().getJoinedPlayers();
