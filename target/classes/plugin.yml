@@ -13,3 +13,9 @@ commands:
   version:
     description: Writes a message with the plugin version
     permission: snhello.version
+  config:
+    description: Writes a message with the plugin configuration
+    permission: snhello.config
+  setconfig:
+    description: Sets a configuration value
+    permission: snhello.setconfig

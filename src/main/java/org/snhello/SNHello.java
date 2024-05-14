@@ -22,6 +22,11 @@ public final class SNHello extends JavaPlugin {
         return config;
     }
 
+    public void reloadPluginConfig() {
+        reloadConfig();
+        config = new Configuration(this);
+    }
+
     @Override
     public void onDisable() {
         // Plugin shutdown logic
