@@ -14,7 +14,6 @@ public final class SNHello extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new QuitListener(this), this);
 
         this.getCommand("SNHello").setExecutor(new ReloadCommand(this));
-        this.getCommand("rsnhp").setExecutor(new ReloadCommand(this));
         // Plugin startup logic
         //write in console with green color: "Plugin enabled!"
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "SNHello Plugin is enabled!");

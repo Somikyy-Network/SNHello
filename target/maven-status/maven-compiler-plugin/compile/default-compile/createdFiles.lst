@@ -1,7 +1,2 @@
-org\snhello\SNHello.class
-org\snhello\ReloadCommand.class
-org\snhello\JoinListener.class
-org\snhello\QuitListener.class
-org\snhello\JoinListener$1.class
-org\snhello\Configuration.class
-org\snhello\QuitListener$1.class
+org/snhello/QuitListener$1.class
+org/snhello/ReloadCommand.class
