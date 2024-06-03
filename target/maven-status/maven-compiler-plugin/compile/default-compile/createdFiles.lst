@@ -1,2 +1,2 @@
-org/snhello/QuitListener$1.class
-org/snhello/ReloadCommand.class
+org\snhello\ReloadCommand.class
+org\snhello\QuitListener$1.class
